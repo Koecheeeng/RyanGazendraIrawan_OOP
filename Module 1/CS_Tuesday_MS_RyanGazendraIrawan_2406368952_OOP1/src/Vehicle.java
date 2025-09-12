@@ -14,21 +14,24 @@ public class Vehicle {
     public String getBrand() {
         return brand;
     }
+
     public int getYear() {
         return year;
     }
+
     public VehicleType getType() {
         return type;
     }
+
     public int getPrice() {
         return price;
     }
 
     public void showDetail() {
-        system.out.printIn("Vehicle Detail :");
-        system.out.printIn("Brand : " + brand);
-        system.out.printIn("Year : " + year);
-        system.out.printIn("Type : " + type);
-        system.out.printIn("Harga : Rp. " + price);
+        System.out.println("Vehicle Detail:");
+        System.out.println("  Brand : " + brand);
+        System.out.println("  Year  : " + year);
+        System.out.println("  Type  : " + type);
+        System.out.println("  Price : " + price);
     }
 }
