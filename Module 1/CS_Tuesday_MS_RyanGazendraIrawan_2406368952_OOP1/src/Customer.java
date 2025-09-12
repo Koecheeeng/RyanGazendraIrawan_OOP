@@ -12,12 +12,12 @@ public class Customer {
     }
 
     public void showDetail() {
-        System.out.printIn("Customer Name : ");
+        System.out.println("Customer Name: " + name);
         if (vehicle != null) {
             vehicle.showDetail();
-            System.out.printIn("Total Price : " + getTotalPrice());
-        } else (
-                System.out.printIn("No vehicle purchased.");
-                )
+            System.out.println("  Total Price: " + getTotalPrice());
+        } else {
+            System.out.println("  No vehicle purchased.");
+        }
     }
 }
