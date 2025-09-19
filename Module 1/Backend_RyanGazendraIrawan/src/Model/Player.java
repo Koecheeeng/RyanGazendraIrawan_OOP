@@ -1,32 +1,42 @@
 package Model;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Player implements ShowDetail {
-    private final UUID playerId;
-    private final String username;
+public class Player {
+    private UUID id;
+    private String username;
     private int highScore;
-    private int totalDistance;
     private int totalCoins;
-    private final LocalDateTime createdAt;
+    private int totalDistance;
 
     public Player(String username) {
-        this.playerId = UUID.randomUUID();
+        this.id = UUID.randomUUID();
         this.username = username;
-        this.createdAt = LocalDateTime.now();
-        this.highScore = 0;
-        this.totalCoins = 0;
-        this.totalDistance = 0;
     }
 
-    public UUID getPlayerId() {
-        return playerId;
+    public UUID getId() {
+        return id;
     }
 
-    public void updateHighScore(int newScore) {
-        if (newScore > this.highScore) {
-            this.highScore = newScore;
+    public String getUsername() {
+        return username;
+    }
+
+    public int getHighScore() {
+        return highScore;
+    }
+
+    public int getTotalCoins() {
+        return totalCoins;
+    }
+
+    public int getTotalDistance() {
+        return totalDistance;
+    }
+
+    public void updateHighScore(int score) {
+        if (score > this.highScore) {
+            this.highScore = score;
         }
     }
 
@@ -39,13 +49,7 @@ public class Player implements ShowDetail {
     }
 
     @Override
-    public void showDetail() {
-        System.out.print("\nPlayer ID : " + playerId);
-        System.out.print("\nUsername : " + username);
-        System.out.print("\nHigh Score : " + highScore);
-        System.out.print("\nCoins Collected : " + totalCoins);
-        System.out.print("\nDistance : " + totalDistance);
-        System.out.print("\nCreated At : " + createdAt);
-        System.out.print("-   -   -");
+    public String toString() {
+        return username + " (Score: " + highScore + ", Coins: " + totalCoins + ", Distance: " + totalDistance + ")";
     }
 }

@@ -2,19 +2,19 @@ package Repository;
 
 import java.util.*;
 
-abstract class BaseRepository<T, ID> {
-    public HashMap<ID, T>Map;
-    protected ArrayList<T>List;
+public abstract class BaseRepository<T, ID> {
+    protected Map<ID, T> storage = new HashMap<>();
+    protected List<T> entities = new ArrayList<>();
 
-    public T findById(ID id) {
-
+    public Optional<T> findById(ID id) {
+        return Optional.ofNullable(storage.get(id));
     }
 
-    public void findAll() {
-
+    public List<T> findAll() {
+        return new ArrayList<>(entities);
     }
 
     public abstract void save(T entity);
-    public abstract ID getId(T entity;)
 
+    protected abstract ID getId(T entity);
 }

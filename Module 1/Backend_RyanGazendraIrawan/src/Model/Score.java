@@ -1,24 +1,31 @@
 package Model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
-public class Score implements ShowDetail {
-    private final UUID scoreId;
-    private final UUID playerId;
-    private String player;
+public class Score {
+    private UUID id;
+    private UUID playerId;
     private int value;
     private int coinsCollected;
-    private int distance;
-    private final LocalDateTime createdAt;
+    private int distanceTravelled;
+    private Date createdAt;
 
-    public Score(UUID playerId, int value, int coinsCollected, int distance) {
-        this.scoreId = UUID.randomUUID();
+    public Score(UUID playerId, int value, int coinsCollected, int distanceTravelled) {
+        this.id = UUID.randomUUID();
         this.playerId = playerId;
         this.value = value;
         this.coinsCollected = coinsCollected;
-        this.distance = distance;
-        this.createdAt = LocalDateTime.now();
+        this.distanceTravelled = distanceTravelled;
+        this.createdAt = new Date();
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public UUID getPlayerId() {
+        return playerId;
     }
 
     public int getValue() {
@@ -29,21 +36,16 @@ public class Score implements ShowDetail {
         return coinsCollected;
     }
 
-    public int getDistance() {
-        return distance;
+    public int getDistanceTravelled() {
+        return distanceTravelled;
     }
 
-    public UUID getPlayerId() {
-        return playerId;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
     @Override
-    public void showDetail() {
-        System.out.print("\nScore ID : " + scoreId);
-        System.out.print("\nPlayer ID : " + playerId);
-        System.out.print("\nCoins Collected : " + coinsCollected);
-        System.out.print("\nDistance : " + distance);
-        System.out.print("\nCreated At : " + createdAt);
-        System.out.print("\n-   -   -");
+    public String toString() {
+        return "Score: " + value + ", Coins: " + coinsCollected + ", Distance: " + distanceTravelled;
     }
 }
