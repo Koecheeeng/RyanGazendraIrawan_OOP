@@ -1,31 +1,34 @@
 package Model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Score {
-    private UUID id;
+    private UUID scoreId;
     private UUID playerId;
+    private Player player;
     private int value;
     private int coinsCollected;
-    private int distanceTravelled;
-    private Date createdAt;
+    private int distance;
+    private LocalDateTime createdAt;
 
-    public Score(UUID playerId, int value, int coinsCollected, int distanceTravelled) {
-        this.id = UUID.randomUUID();
+    public Score(UUID playerId, int score, int coinsCollected, int distance) {
+        this.scoreId = UUID.randomUUID();
         this.playerId = playerId;
-        this.value = value;
+        this.value = score;
         this.coinsCollected = coinsCollected;
-        this.distanceTravelled = distanceTravelled;
-        this.createdAt = new Date();
+        this.distance = distance;
+        this.createdAt = LocalDateTime.now();
     }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public UUID getPlayerId() {
-        return playerId;
+    public void showDetail() {
+        System.out.println("Score ID: " + scoreId);
+        System.out.println("Player ID: " + playerId);
+        System.out.println("Score Value: " + value);
+        System.out.println("Coins Collected: " + coinsCollected);
+        System.out.println("Distance: " + distance);
+        System.out.println("Created At: " + createdAt);
+        System.out.println();
     }
 
     public int getValue() {
@@ -36,16 +39,19 @@ public class Score {
         return coinsCollected;
     }
 
-    public int getDistanceTravelled() {
-        return distanceTravelled;
+    public int getDistance() {
+        return distance;
     }
 
-    public Date getCreatedAt() {
+    public Object getPlayerId() {
+        return playerId;
+    }
+
+    public UUID getScoreId() {
+        return scoreId;
+    }
+
+    public LocalDateTime getCreatedAt() {
         return createdAt;
-    }
-
-    @Override
-    public String toString() {
-        return "Score: " + value + ", Coins: " + coinsCollected + ", Distance: " + distanceTravelled;
     }
 }

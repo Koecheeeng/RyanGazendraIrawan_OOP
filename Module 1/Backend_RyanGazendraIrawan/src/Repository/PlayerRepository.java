@@ -5,43 +5,54 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class PlayerRepository extends BaseRepository<Player, UUID> {
+
+    @Override
+    public void save(Player player) {
+        UUID id = getId(player);
+        dataMap.put(id, player);
+        allData.add(player);
+    }
+
+    @Override
+    public UUID getId(Player entity) {
+        return entity.getPlayerId();
+    }
+
     public Optional<Player> findByUsername(String username) {
-        return entities.stream().filter(p -> p.getUsername().equals(username)).findFirst();
+        return allData.stream()
+                .filter(player -> player.getUsername().equals(username))
+                .findFirst();
+    }
+
+    public boolean existByUsername(String username) {
+        return allData.stream()
+                .anyMatch(player -> player.getUsername().equals(username));
     }
 
     public List<Player> findTopPlayersByHighScore(int limit) {
-        return entities.stream()
-                .sorted(Comparator.comparingInt(Player::getHighScore).reversed())
+        return allData.stream()
+                .sorted((p1, p2) -> Integer.compare(p2.getHighScore(), p1.getHighScore()))
                 .limit(limit)
                 .collect(Collectors.toList());
     }
 
     public List<Player> findByHighscoreGreaterThan(int minScore) {
-        return entities.stream()
-                .filter(p -> p.getHighScore() > minScore)
+        return allData.stream()
+                .filter(player -> player.getHighScore() > minScore)
                 .collect(Collectors.toList());
     }
 
-    public List<Player> findAllByOrderByTotalCoinsDesc() {
-        return entities.stream()
-                .sorted(Comparator.comparingInt(Player::getTotalCoins).reversed())
+    public List<Player> findAllByOrderByTotalCoinsDesc(int getTotalCoinsByPlayerId) {
+        return allData.stream()
+                .sorted((p1, p2) -> Integer.compare(p2.getTotalCoins(), p1.getTotalCoins()))
+                .limit(limit)
                 .collect(Collectors.toList());
     }
 
-    public List<Player> findAllByOrderByTotalDistanceTravelledDesc() {
-        return entities.stream()
-                .sorted(Comparator.comparingInt(Player::getTotalDistance).reversed())
+    public List<Player> findAllByOrderByTotalDistanceTravelledDesc(int getTotalDistanceByPlayerId) {
+        return allData.stream()
+                .sorted((p1, p2) -> Integer.compare(p2.getTotalDistance(), p1.getTotalDistance()))
+                .limit(limit)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public void save(Player player) {
-        storage.put(player.getId(), player);
-        entities.add(player);
-    }
-
-    @Override
-    protected UUID getId(Player entity) {
-        return entity.getId();
     }
 }
