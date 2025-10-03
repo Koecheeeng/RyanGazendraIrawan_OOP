@@ -7,15 +7,8 @@ import java.util.stream.Collectors;
 public class PlayerRepository extends BaseRepository<Player, UUID> {
 
     @Override
-    public void save(Player player) {
-        UUID id = getId(player);
-        dataMap.put(id, player);
-        allData.add(player);
-    }
-
-    @Override
-    public UUID getId(Player entity) {
-        return entity.getPlayerId();
+    protected UUID getId(Player entity) {
+        return entity.getId();
     }
 
     public Optional<Player> findByUsername(String username) {
@@ -24,7 +17,7 @@ public class PlayerRepository extends BaseRepository<Player, UUID> {
                 .findFirst();
     }
 
-    public boolean existByUsername(String username) {
+    public boolean existsByUsername(String username) {
         return allData.stream()
                 .anyMatch(player -> player.getUsername().equals(username));
     }
@@ -36,23 +29,15 @@ public class PlayerRepository extends BaseRepository<Player, UUID> {
                 .collect(Collectors.toList());
     }
 
-    public List<Player> findByHighscoreGreaterThan(int minScore) {
-        return allData.stream()
-                .filter(player -> player.getHighScore() > minScore)
-                .collect(Collectors.toList());
-    }
-
-    public List<Player> findAllByOrderByTotalCoinsDesc(int getTotalCoinsByPlayerId) {
+    public List<Player> findAllByOrderByTotalCoinsDesc() {
         return allData.stream()
                 .sorted((p1, p2) -> Integer.compare(p2.getTotalCoins(), p1.getTotalCoins()))
-                .limit(limit)
                 .collect(Collectors.toList());
     }
 
-    public List<Player> findAllByOrderByTotalDistanceTravelledDesc(int getTotalDistanceByPlayerId) {
+    public List<Player> findAllByOrderByTotalDistanceTravelledDesc() {
         return allData.stream()
                 .sorted((p1, p2) -> Integer.compare(p2.getTotalDistance(), p1.getTotalDistance()))
-                .limit(limit)
                 .collect(Collectors.toList());
     }
 }

@@ -3,7 +3,7 @@ package Repository;
 import java.util.*;
 
 public abstract class BaseRepository<T, ID> {
-    Map<ID, T> dataMap = new HashMap<>();
+    protected Map<ID, T> dataMap = new HashMap<>();
     protected List<T> allData = new ArrayList<>();
 
     public Optional<T> findById(ID id) {
@@ -14,12 +14,20 @@ public abstract class BaseRepository<T, ID> {
         return new ArrayList<>(allData);
     }
 
-    public abstract void save(T entity);
-    public abstract ID getId(T entity);
+    public void save(T entity) {
+        ID id = getId(entity);
+        dataMap.put(id, entity);
+        if (!allData.contains(entity)) {
+            allData.add(entity);
+        }
+    }
+
     public void deleteById(ID id) {
         T entity = dataMap.remove(id);
         if (entity != null) {
             allData.remove(entity);
         }
     }
+
+    protected abstract ID getId(T entity);
 }
