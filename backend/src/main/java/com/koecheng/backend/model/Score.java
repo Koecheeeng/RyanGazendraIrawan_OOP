@@ -23,7 +23,7 @@ public class Score {
     private Integer value;
 
     @Column(name = "coins_collected")
-    private Integer coinsCollected = 0;
+    public Integer coinsCollected = 0;
 
     @Column(name = "distance_travelled")
     private Integer distanceTravelled = 0;

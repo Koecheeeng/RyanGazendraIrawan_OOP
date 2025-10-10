@@ -5,8 +5,8 @@ import com.koecheng.backend.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -38,9 +38,11 @@ public class PlayerService {
         Player existingPlayer = playerRepository.findById(playerId)
                 .orElseThrow(() -> new RuntimeException("Player not found with ID: " + playerId));
 
-        if (updatedPlayer.getUsername() != null &&
-                !updatedPlayer.getUsername().equals(existingPlayer.getUsername())) {
-            if (playerRepository.existsByUsername(updatedPlayer.getUsername())) {
+        // Update only non-null fields
+        if (updatedPlayer.getUsername() != null) {
+            // Check if new username is already taken by another player
+            if (!existingPlayer.getUsername().equals(updatedPlayer.getUsername())
+                    && playerRepository.existsByUsername(updatedPlayer.getUsername())) {
                 throw new RuntimeException("Username already exists: " + updatedPlayer.getUsername());
             }
             existingPlayer.setUsername(updatedPlayer.getUsername());
@@ -49,9 +51,11 @@ public class PlayerService {
         if (updatedPlayer.getHighScore() != null) {
             existingPlayer.setHighScore(updatedPlayer.getHighScore());
         }
+
         if (updatedPlayer.getTotalCoins() != null) {
             existingPlayer.setTotalCoins(updatedPlayer.getTotalCoins());
         }
+
         if (updatedPlayer.getTotalDistanceTravelled() != null) {
             existingPlayer.setTotalDistanceTravelled(updatedPlayer.getTotalDistanceTravelled());
         }
@@ -66,6 +70,7 @@ public class PlayerService {
         playerRepository.deleteById(playerId);
     }
 
+
     public void deletePlayerByUsername(String username) {
         Player player = playerRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Player not found with username: " + username));
@@ -76,7 +81,10 @@ public class PlayerService {
         Player player = playerRepository.findById(playerId)
                 .orElseThrow(() -> new RuntimeException("Player not found with ID: " + playerId));
 
+        // Update high score if this score is higher
         player.updateHighScore(scoreValue);
+
+        // Add coins and distance to totals
         player.addCoins(coinsCollected);
         player.addDistance(distanceTravelled);
 
@@ -84,22 +92,15 @@ public class PlayerService {
     }
 
     public List<Player> getLeaderboardByHighScore(int limit) {
-        return playerRepository.findAll().stream()
-                .sorted(Comparator.comparing(Player::getHighScore, Comparator.nullsFirst(Comparator.naturalOrder())).reversed())
-                .limit(limit)
-                .collect(Collectors.toList());
+        return playerRepository.findTopPlayersByHighScore(limit);
     }
 
     public List<Player> getLeaderboardByTotalCoins() {
-        return playerRepository.findAll().stream()
-                .sorted(Comparator.comparing(Player::getTotalCoins, Comparator.nullsFirst(Comparator.naturalOrder())).reversed())
-                .collect(Collectors.toList());
+        return playerRepository.findAllByOrderByTotalCoinsDesc();
     }
 
     public List<Player> getLeaderboardByTotalDistance() {
-        return playerRepository.findAll().stream()
-                .sorted(Comparator.comparing(Player::getTotalDistanceTravelled, Comparator.nullsFirst(Comparator.naturalOrder())).reversed())
-                .collect(Collectors.toList());
+        return playerRepository.findAllByOrderByTotalDistanceTravelledDesc();
     }
 
     public boolean isUsernameExists(String username) {
