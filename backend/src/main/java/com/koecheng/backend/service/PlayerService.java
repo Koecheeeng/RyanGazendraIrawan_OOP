@@ -106,4 +106,9 @@ public class PlayerService {
     public boolean isUsernameExists(String username) {
         return playerRepository.existsByUsername(username);
     }
+
+    public boolean playerExists(String playerId) {
+        boolean b = false;
+        return b;
+    }
 }

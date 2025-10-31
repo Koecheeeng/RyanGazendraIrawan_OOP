@@ -88,4 +88,8 @@ public class Score {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
+    public String getPlayerId() {
+        return getPlayerId();
+    }
 }
