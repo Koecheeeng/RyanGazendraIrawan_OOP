@@ -27,7 +27,7 @@ public class Ground {
         return GROUND_HEIGHT;
     }
 
-    public void renderShape(ShapeRenderer shapeRenderer) {
+    public void render(ShapeRenderer shapeRenderer) {
         shapeRenderer.setColor(new Color(0.5f, 0.5f, 0.5f, 1f));
         shapeRenderer.rect(collider.x, collider.y, collider.width, collider.height);
     }
