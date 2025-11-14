@@ -1,18 +1,19 @@
 package com.ryan.frontend.factories;
 
-import java.util.*;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.ryan.frontend.obstacles.BaseObstacle;
 import com.ryan.frontend.obstacles.HomingMissile;
 import com.ryan.frontend.pools.HomingMissilePool;
+import java.util.List;
+import java.util.Random;
 
-public class HomingMissileCreator implements ObstacleFactory.ObstacleCreator {
-
+class HomingMissileCreator implements ObstacleFactory.ObstacleCreator {
     private final HomingMissilePool pool = new HomingMissilePool();
 
     @Override
     public BaseObstacle create(float groundTopY, float spawnX, float playerHeight, Random rng) {
-        float randomY = groundTopY + rng.nextFloat() * 400f;
+        float randomY = groundTopY + rng.nextFloat() * (Gdx.graphics.getHeight() - groundTopY);
         return pool.obtain(new Vector2(spawnX, randomY));
     }
 
@@ -22,22 +23,15 @@ public class HomingMissileCreator implements ObstacleFactory.ObstacleCreator {
     }
 
     @Override
-    public void releaseAll() {
-        pool.releaseAll();
-    }
+    public void releaseAll() { pool.releaseAll(); }
 
     @Override
-    public List<HomingMissile> getInUse() {
-        return pool.getInUse();
-    }
+    public List<HomingMissile> getInUse() { return pool.getInUse(); }
 
     @Override
-    public boolean supports(BaseObstacle obstacle) {
-        return obstacle instanceof HomingMissile;
-    }
+    public boolean supports(BaseObstacle obstacle) { return obstacle instanceof HomingMissile; }
 
     @Override
-    public String getName() {
-        return "HomingMissile";
-    }
+    public String getName() { return "HomingMissile"; }
 }
+

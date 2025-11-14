@@ -8,19 +8,19 @@ public class HorizontalLaserPool extends ObjectPool<HorizontalLaser> {
 
     @Override
     protected HorizontalLaser createObject() {
-        return new HorizontalLaser(new Vector2(Gdx.graphics.getWidth(), 0), 100);
+        return new HorizontalLaser(new Vector2(0, 0), 100);
     }
 
     @Override
-    protected void resetObject(HorizontalLaser object) {
-        object.setPosition(Gdx.graphics.getWidth(), 0);
-        object.setActive(false);
+    protected void resetObject(HorizontalLaser obstacle) {
+        obstacle.setPosition(Gdx.graphics.getWidth(), 0);
+        obstacle.setActive(false);
     }
 
     public HorizontalLaser obtain(Vector2 position, int length) {
-        HorizontalLaser obj = super.obtain();
-        obj.initialize(position, length);
-        obj.setActive(true);
-        return obj;
+        HorizontalLaser obstacle = super.obtain();
+        obstacle.initialize(position, length);
+        obstacle.setActive(true);
+        return obstacle;
     }
 }

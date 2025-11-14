@@ -13,7 +13,7 @@ public class HomingMissile extends BaseObstacle {
     private float height = 20f;
 
     public HomingMissile(Vector2 startPosition) {
-        super(startPosition, 0);
+        super(startPosition,0);
         this.velocity = new Vector2();
     }
 
@@ -29,19 +29,22 @@ public class HomingMissile extends BaseObstacle {
 
     public boolean isTargetingPlayer() {
         if (target == null) return false;
+        float playerCenterX = target.getPosition().x + target.getWidth() / 2f;
         float missileCenterX = position.x + width / 2f;
-        float playerCenterX = target.getPosition().x;
-        return missileCenterX < playerCenterX;
+        return playerCenterX <= missileCenterX;
     }
 
     public void update(float delta) {
-        if (target != null && active) {
-            Vector2 targetPos = new Vector2(target.getPosition());
-            velocity.set(targetPos).sub(position).nor().scl(speed);
-            position.x += velocity.x * delta;
-            position.y += velocity.y * delta;
-            updateCollider();
+        if (target == null || !active) return;
+
+        if (isTargetingPlayer()) {
+            Vector2 targetPosition = target.getPosition(); // Ambil Posisi Player
+            velocity.set(targetPosition).sub(position).nor().scl(speed); // Mengatur velocity untuk mendekati player
         }
+
+        // Always move with current velocity
+        position.add(velocity.x * delta, velocity.y * delta);
+        updateCollider();
     }
 
     @Override

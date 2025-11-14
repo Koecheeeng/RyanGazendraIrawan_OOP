@@ -8,19 +8,19 @@ public class VerticalLaserPool extends ObjectPool<VerticalLaser> {
 
     @Override
     protected VerticalLaser createObject() {
-        return new VerticalLaser(new Vector2(Gdx.graphics.getWidth(), 0), 100);
+        return new VerticalLaser(new Vector2(0, 0), 100);
     }
 
     @Override
-    protected void resetObject(VerticalLaser object) {
-        object.setPosition(Gdx.graphics.getWidth(), 0);
-        object.setActive(false);
+    protected void resetObject(VerticalLaser obstacle) {
+        obstacle.setPosition(Gdx.graphics.getWidth(), 0);
+        obstacle.setActive(false);
     }
 
     public VerticalLaser obtain(Vector2 position, int length) {
-        VerticalLaser obj = super.obtain();
-        obj.initialize(position, length);
-        obj.setActive(true);
-        return obj;
+        VerticalLaser obstacle = super.obtain();
+        obstacle.initialize(position, length);
+        obstacle.setActive(true);
+        return obstacle;
     }
 }

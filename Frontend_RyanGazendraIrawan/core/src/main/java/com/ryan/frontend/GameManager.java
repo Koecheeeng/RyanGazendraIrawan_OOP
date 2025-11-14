@@ -30,11 +30,6 @@ public class GameManager {
         }
     }
 
-    public int getScore() {
-        return score;
-    }
-
-    public boolean isGameActive() {
-        return gameActive;
-    }
+    // Getters
+    public int getScore() { return score; }
 }
