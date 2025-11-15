@@ -3,9 +3,10 @@ package com.ryan.frontend.commands;
 import com.ryan.frontend.Player;
 
 public class JetpackCommand implements Command {
-    private final Player player;
 
-    public JetpackCommand (Player player) {
+    private Player player;
+
+    public JetpackCommand(Player player) {
         this.player = player;
     }
 

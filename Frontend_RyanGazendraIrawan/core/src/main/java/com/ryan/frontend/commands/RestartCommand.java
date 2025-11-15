@@ -1,19 +1,21 @@
 package com.ryan.frontend.commands;
 
-import com.ryan.frontend.GameManager;
 import com.ryan.frontend.Player;
+import com.ryan.frontend.GameManager;
 
-import static jdk.javadoc.internal.tool.Main.execute;
+public class RestartCommand implements Command {
 
-class RestartCommand (private val player:Player, gameManager: ) : command {
-    private val gameManager:GameManager
+    private Player player;
+    private GameManager gameManager;
 
-        init {
-        this.gameManager = gameManager
+    public RestartCommand(Player player, GameManager gameManager) {
+        this.player = player;
+        this.gameManager = gameManager;
     }
 
-    override fun execute() {
-        player.reset()
-            gameManager.setScore(0)
+    @Override
+    public void execute() {
+        player.reset();
+        gameManager.setScore(0);
     }
 }
