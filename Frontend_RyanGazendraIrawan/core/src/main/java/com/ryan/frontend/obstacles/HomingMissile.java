@@ -13,7 +13,7 @@ public class HomingMissile extends BaseObstacle {
     private float height = 20f;
 
     public HomingMissile(Vector2 startPosition) {
-        super(startPosition,0);
+        super(startPosition, 20);
         this.velocity = new Vector2();
     }
 

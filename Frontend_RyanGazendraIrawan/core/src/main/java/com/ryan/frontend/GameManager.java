@@ -1,13 +1,14 @@
 package com.ryan.frontend;
+import com.ryan.frontend.observers.ScoreManager;
 
 public class GameManager {
     private static GameManager instance;
 
-    private int score;
+    private ScoreManager scoreManager;
     private boolean gameActive;
 
     private GameManager() {
-        score = 0;
+        scoreManager = new ScoreManager();
         gameActive = false;
     }
 
@@ -19,17 +20,26 @@ public class GameManager {
     }
 
     public void startGame() {
-        score = 0;
+        scoreManager.setScore(0);
         gameActive = true;
         System.out.println("Game Started!");
     }
 
     public void setScore(int newScore) {
         if (gameActive) {
-            score = newScore;
+            scoreManager.setScore(newScore);
         }
     }
 
     // Getters
-    public int getScore() { return score; }
+    public int getScore() { return scoreManager.getScore(); }
+
+    // Delegate observer methods to ScoreManager
+    public void addObserver(com.ryan.frontend.observers.Observer observer) {
+        scoreManager.addObserver(observer);
+    }
+
+    public void removeObserver(com.ryan.frontend.observers.Observer observer) {
+        scoreManager.removeObserver(observer);
+    }
 }
