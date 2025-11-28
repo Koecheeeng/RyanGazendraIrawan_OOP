@@ -10,6 +10,7 @@ public class GameManager {
     private GameManager() {
         scoreManager = new ScoreManager();
         gameActive = false;
+        int backendService;
     }
 
     public static GameManager getInstance() {
@@ -42,4 +43,14 @@ public class GameManager {
     public void removeObserver(com.ryan.frontend.observers.Observer observer) {
         scoreManager.removeObserver(observer);
     }
+
+    private void backendService;
+    private String currentPlayerId null;
+    private int coinsCollected = 0;
+
+    public registerPlayer(String username) {
+    }
+
+    backendService.createPlayer (String username);
+    backendService.BackendService.RequestCallback();
 }

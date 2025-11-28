@@ -2,8 +2,10 @@ package com.ryan.frontend.commands;
 
 import com.ryan.frontend.Player;
 
+/**
+ * Concrete command for jetpack action
+ */
 public class JetpackCommand implements Command {
-
     private Player player;
 
     public JetpackCommand(Player player) {

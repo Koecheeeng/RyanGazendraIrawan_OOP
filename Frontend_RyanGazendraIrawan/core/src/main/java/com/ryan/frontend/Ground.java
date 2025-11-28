@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Ground {
-    private static final float GROUND_HEIGHT = 50f;
+    private static final float GROUND_HEIGHT = 25f;
     private Rectangle collider;
 
     public Ground() {

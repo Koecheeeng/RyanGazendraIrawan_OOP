@@ -7,8 +7,8 @@ import java.util.Stack;
 public class GameStateManager {
     private final Stack<GameState> states;
 
-    public GameStateManager(Stack<GameState> states) {
-        this.states = new Stack<>();
+    public GameStateManager() {
+        states = new Stack<>();
     }
 
     public void push(GameState state) {
@@ -16,28 +16,19 @@ public class GameStateManager {
     }
 
     public void pop() {
-        if (!states.isEmpty()) {
-            GameState top = states.pop();
-            top.dispose();
-        }
+        states.pop().dispose();
     }
 
     public void set(GameState state) {
-        if (!states.isEmpty()) {
-            pop();
-        }
-        push(state);
+        states.pop().dispose();
+        states.push(state);
     }
 
     public void update(float delta) {
-        if (!states.isEmpty()) {
-            states.peek().update(delta);
-        }
+        states.peek().update(delta);
     }
 
     public void render(SpriteBatch batch) {
-        if (!states.isEmpty()) {
-            states.peek().render(batch);
-        }
+        states.peek().render(batch);
     }
 }
