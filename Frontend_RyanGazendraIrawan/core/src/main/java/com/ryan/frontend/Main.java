@@ -1,11 +1,11 @@
-package com.ryan.frontend; // Ganti dengan nama package kalian
+package com.ryan.frontend;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.ryan.frontend.states.GameStateManager;
-import com.ryan.frontend.states.PlayingState;
+import com.ryan.frontend.states.MenuState;
 
 public class Main extends Game {
     private GameStateManager gsm;
@@ -15,7 +15,7 @@ public class Main extends Game {
     public void create() {
         spriteBatch = new SpriteBatch();
         gsm = new GameStateManager();
-        gsm.push(new PlayingState(gsm));
+        gsm.push(new MenuState(gsm));
     }
 
     @Override
@@ -28,7 +28,10 @@ public class Main extends Game {
     @Override
     public void dispose() {
         super.dispose();
-        gsm.pop(); // Dispose the current state
-        spriteBatch.dispose();
+        gsm.pop();
+
+        if (spriteBatch != null) {
+            spriteBatch.dispose();
+        }
     }
 }
